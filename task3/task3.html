@@ -28,7 +28,7 @@
   <button id="sort-btn">排序</button>
 
 <script type="text/javascript">
-
+var data = [];
 /**
  * getData方法
  * 读取id为source的列表，获取其中城市名字及城市对应的空气质量
@@ -46,7 +46,7 @@ function getData() {
     ……
   ]
   */
-  var data = [];
+ 
   var source = document.getElementById('source');
   var li = document.getElementsByTagName('li');
   Array.prototype.forEach.call(li,function(elem){
@@ -89,6 +89,10 @@ function render(data) {
 }
 
 function btnHandle() {
+  //清除
+  var ul = document.getElementById('resort');
+  data = [];
+  ul.innerHTML = '';
   var aqiData = getData();
   aqiData = sortAqiData(aqiData);
   render(aqiData);
