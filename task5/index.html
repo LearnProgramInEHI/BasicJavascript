@@ -3,6 +3,40 @@
   <head>
     <meta charset="utf-8">
     <title>IFE JavaScript Task 01</title>
+    <style>
+      #test{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: flex-end;
+      }
+      .p1{
+        width:20px;
+        height:60px;
+        background-color: black;
+        margin-left: 2px;
+      }
+      .p2{
+        width:30px;
+        height:80px;
+        background-color: black;
+        margin-left: 2px;
+        
+      }
+      .p3{
+        width:25px;
+        height:40px;
+        margin-left: 2px;
+        background-color: black;
+      }
+      .p4{
+        width:20px;
+        margin-left: 2px;
+        height:100px;
+        background-color: black;
+      }
+    </style>
   </head>
 <body>
   <div>
@@ -13,6 +47,13 @@
     <button id='rightOut'>右侧出</button>
     <button id='sortBtn'>排序</button>
     <div id='aqi-display'></div>
+  </div>
+  <div id='test'>
+    <h1>测试：</h1>
+    <p class='p1'></p>
+    <p class='p2'></p>
+    <p class='p3'></p>
+    <p class='p4'></p>
   </div>
   
   <script type="text/javascript">
