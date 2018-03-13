@@ -3,12 +3,76 @@
   <head>
     <meta charset="utf-8">
     <title>IFE JavaScript Task 01</title>
+    <style>
+      p{
+        display: inline-block;
+        background-color: #232321;
+        color:white;
+        margin-right:0.4rem;
+        padding:0.3rem;
+      }
+    </style>
   </head>
 <body>
-
- 
+<div>
+    <input type='text' id='aqi-input'> 
+    <button id='leftIn'>左侧入</button>
+    <button id='rightIn'>右侧入</button>
+    <button id='leftOut'>左侧出</button>
+    <button id='rightOut'>右侧出</button>
+    <div id='aqi-display'></div>
+</div>
 <script type="text/javascript">
-
+var aqiDisplay = document.getElementById('aqi-display');
+/**
+*
+*/
+function leftInHander(){
+    var aqiInput = document.getElementById('aqi-input').value;  
+    var p = document.createElement('p');
+    p.innerText = aqiInput;
+    aqiDisplay.insertBefore(p,aqiDisplay.firstElementChild);
+}
+function leftOutHander(){
+    if(aqiDisplay.children.length == 0){
+      alert('The node is zero!!');
+    }else{
+      aqiDisplay.removeChild(aqiDisplay.firstElementChild);
+  }
+}
+function rightInHander(){
+    var aqiInput = document.getElementById('aqi-input').value;
+    var p = document.createElement('p');
+    p.innerText = aqiInput;
+    aqiDisplay.appendChild(p);
+}
+function rightOutHander(){
+  if(aqiDisplay.children.length == 0){
+      alert('The node is zero!!');
+    }else{
+      aqiDisplay.removeChild(aqiDisplay.lastElementChild);
+  }
+}
+/**
+*
+*/
+function execute(btn,fn){
+  btn.addEventListener('click',fn);
+}
+/**
+*
+*/
+function init(){
+    var leftIn = document.getElementById('leftIn');
+    var rightIn = document.getElementById('rightIn');
+    var leftout = document.getElementById('leftOut');
+    var rightout = document.getElementById('rightOut');
+    execute(leftIn,leftInHander);
+    execute(leftOut,leftOutHander);
+    execute(rightIn,rightInHander);
+    execute(rightout,rightOutHander);
+}
+init();
 </script>
 </body>
 </html>
