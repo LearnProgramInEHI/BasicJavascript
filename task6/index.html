@@ -3,12 +3,90 @@
   <head>
     <meta charset="utf-8">
     <title>IFE JavaScript Task 01</title>
+    <style>
+      textarea{
+        width:200px;
+        height:90px;
+      }
+      input{
+        width:200px;
+      }
+      div{
+        margin:1rem;
+      }
+      #aqi-display{
+        border:1px dashed #332323;
+        padding:2rem;
+      }
+      p{
+        border: 1px solid black;
+        display: inline-block;
+        margin-right:1rem;
+        padding:1rem;
+      }
+      .selected{
+        background-color: lightseagreen;
+      }
+    </style>
   </head>
 <body>
-
- 
+  <div>
+    <textarea id='submit'></textarea>
+    <button id='submitBtn'>submit</button>
+  </div>
+  <div>
+    <input type='text' id='search'>
+    <button id='searchBtn'>search</button>
+  </div>
+  <div id='aqi-display'>
+  </div>
 <script type="text/javascript">
-
+window.onload=function(){
+  var bang = new Bang();
+  //console.log(bang.aqiDisplay);
+  var submitBtn = document.getElementById('submitBtn');
+  submitBtn.addEventListener('click',function(){
+    bang.submit();
+  });
+  var searchBtn = document.getElementById('searchBtn');
+  searchBtn.addEventListener('click',function(){
+    bang.search();
+  })
+  
+};
+function Bang(){};
+Bang.prototype = {
+  contructor:Bang,
+  aqiDisplay:document.getElementById('aqi-display'),
+  submit:function(){
+    console.log(this.aqiDisplay);
+    var submit = document.getElementById('submit').value;
+    var text = submit.split(/[^0-9a-zA-Z\u4e00-\u9fa5]+/g).filter(function(elem){
+        return elem.length!=null && elem.length!=0;
+    });
+    for(var i=0;i<text.length;i++){
+      var p = document.createElement('p');
+      p.innerText = text[i];
+      this.aqiDisplay.appendChild(p);
+    }
+  },
+  /**
+  innerText 跟 innerHTML 的区别
+  */
+  search:function(){
+    var p = document.querySelectorAll('p');
+    var search = document.getElementById('search').value;
+    if(p.length == 0){
+      alert('No data found!');
+      return;
+    }
+    for(var i=0;i<p.length;i++){
+      if(p[i].innerText.trim().indexOf(search.trim())!=-1){
+       p[i].innerHTML = p[i].innerText.replace(new RegExp(search.trim(),'g'),'<span class="selected">'+search.trim()+'</span>');
+      }
+    }
+  }
+}
 </script>
 </body>
 </html>
