@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>IFE JavaScript Task 01</title>
     <style>
+      /*
       #test{
         display: flex;
         flex-direction: row;
@@ -35,6 +36,20 @@
         margin-left: 2px;
         height:100px;
         background-color: black;
+      }*/
+
+      #aqi-display{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: flex-end;
+      }
+      p{
+        width:1.7rem;
+        margin-right:0.4rem;
+        display: inline-block;
+        background-color: black;
       }
     </style>
   </head>
@@ -48,16 +63,96 @@
     <button id='sortBtn'>排序</button>
     <div id='aqi-display'></div>
   </div>
-  <div id='test'>
+  <!--div id='test'>
     <h1>测试：</h1>
     <p class='p1'></p>
     <p class='p2'></p>
     <p class='p3'></p>
     <p class='p4'></p>
-  </div>
+  </div-->
   
   <script type="text/javascript">
-    
+    var aqiDisplay = document.getElementById('aqi-display');
+    var data = []
+    /**
+    * 
+    */
+    function leftInHander(){
+       if(data.length>60){
+         alert('大于60个，不能加入');
+       }else{
+         var aqiInput = document.getElementById('aqi-input').value;
+         if(aqiInput.match(/\d+/)){
+            data.unshift(aqiInput);
+            render(data);
+         }
+         
+       }
+    }
+    function leftOutHander(){
+       data.shift();
+       render(data);
+    }
+   function rightInHander(){
+       if(data.length>60){
+         alert('大于60个，不能加入');
+       }else{
+         var aqiInput = document.getElementById('aqi-input').value;
+         if(aqiInput.match(/\d+/)){
+            data.push(aqiInput);
+            render(data);
+         }
+       }
+    }
+    function rightOutHander(){
+      data.pop();
+      render(data);
+    }
+    function sortHander(){
+      //aqiDisplay.innerHTML = '';  
+      var p = document.querySelectorAll('p');   
+      var timer = setInterval(function(){
+        for(var i=0;i<p.length;i++){
+          for(var j=i+1;j<p.length;j++){
+            if(parseInt(p[i].style.height)>parseInt(p[j].style.height)){
+              aqiDisplay.insertBefore(p[j],p[i]);
+              clearInterval(timer);
+            }
+          }
+        }
+      },500)
+    }
+    function render(data){
+      aqiDisplay.innerHTML = '';
+      for(var i=0;i<data.length;i++){
+        var p = document.createElement('p');
+        p.className = 'data'
+        p.style.height = data[i]+'px';
+        aqiDisplay.appendChild(p);
+      }
+    }
+    /**
+    *
+    */
+    function execute(btn,fn){
+      btn.addEventListener('click',fn);
+    }
+    /**
+    *
+    */
+    function init(){
+        var leftIn = document.getElementById('leftIn');
+        var rightIn = document.getElementById('rightIn');
+        var leftout = document.getElementById('leftOut');
+        var rightout = document.getElementById('rightOut');
+        var sortBtn = document.getElementById('sortBtn');
+        execute(leftIn,leftInHander);
+        execute(leftOut,leftOutHander);
+        execute(rightIn,rightInHander);
+        execute(rightout,rightOutHander);
+        execute(sortBtn,sortHander);
+    }
+    init();
   </script>
 </body>
 </html>
