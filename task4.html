@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>IFE JavaScript Task 04</title>
+        <style>
+            p{
+                display: inline-block;
+                background-color: red;
+                color:white;
+                margin-right:8px;
+                padding:12px;
+        }
+        </style>
+    </head>
+    <body>
+        <input type='text' id='textInput'>
+        <button id='leftInput'>左侧入</button>
+        <button id='leftOutput'>左侧出</button>
+        <button id='rightInput'>右侧入</button>
+        <button id='rightOutput'>右侧出</button>
+        <div id='display'></div>
+        <script type="text/javascript">       
+            var display=document.getElementById('display');
+            function leftInput()
+            {
+                var textInput=document.getElementById('textInput').value;
+                var p=document.createElement('p');
+                p.innerText=textInput;
+                display.insertBefore(p,display.firstElementChild);             
+            }
+            function leftOutput()
+            {
+                display.removeChild(display.firstElementChild);
+                alert(document.getElementById('textInput').value);
+            }
+            function rightInput()
+            {
+                var textInput=document.getElementById('textInput').value;
+                var p=document.createElement('p');
+                p.innerText=textInput;
+                display.appendChild(p);
+            }
+            function rightOutput()
+            {
+                display.removeChild(display.lastElementChild);  
+                alert(document.getElementById('textInput').value);              
+            }
+            function del()
+            {
+                var t=window.event.target;
+               display.removeChild(t);
+            }
+            function execute()
+            {
+                var btnLeftInput=document.getElementById('leftInput');
+                var btnLeftOutput=document.getElementById('leftOutput');
+                var btnRightInput=document.getElementById('rightInput');
+                var btnRightOutput=document.getElementById('rightOutput');  
+                var delete1=document.getElementById('display');
+
+                btnLeftInput.onclick=function(){leftInput();}
+                btnLeftOutput.onclick=function(){leftOutput();}
+                btnRightInput.onclick=function(){rightInput();}
+                btnRightOutput.onclick=function(){rightOutput();}     
+                delete1.onclick=function(){del();}       
+            }
+            execute();
+        </script>        
+    </body>
+</html>
