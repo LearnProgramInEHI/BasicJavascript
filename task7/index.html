@@ -3,11 +3,136 @@
   <head>
     <meta charset="utf-8">
     <title>IFE JavaScript Task 01</title>
+    <style>
+      #container{
+        width:1300px;
+        height:300px;
+        margin: 0 auto;
+      }
+      div{
+        margin:30px;
+        width:50%;
+        height:50%;
+        border: 1px solid black;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: center;
+      }
+      #btn{
+        margin:0 auto;
+        width:1300px;
+        border: none;
+      }
+    </style>
   </head>
 <body>
-
- 
+<div id='container'>
+  <div>
+    <div>
+      <div></div>
+      <div></div>      
+    </div>
+    <div>
+      <div></div>
+      <div></div>      
+    </div>
+  </div>
+  <div>
+    <div>
+      <div></div>
+      <div></div>
+    </div>
+    <div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+</div>
+<div id='btn'>
+  <button id='preBtn'>前序遍历</button>
+  <button id='midBtn'>中序遍历</button>
+  <button id='aftBtn'>后序遍历</button>
+</div>
 <script type="text/javascript">
+  window.onload=function(){
+    var preBtn = document.getElementById('preBtn');
+    var midBtn = document.getElementById('midBtn');
+    var aftBtn = document.getElementById('aftBtn');
+    var container = document.getElementById('container');
+    var box = new Box();
+    preBtn.onclick = function(){
+      box.reset();
+      box.preSort(container);
+      box.changeColor()
+    }
+    midBtn.onclick = function(){
+      box.reset();
+      box.midSort(container);
+      box.changeColor()
+    }
+     aftBtn.onclick = function(){
+      box.reset();
+      box.aftSort(container);
+      box.changeColor()
+    }
+  }
+  function Box(){
+    this.divList = [];
+  }
+  Box.prototype = {
+    
+    preSort:function(node){
+      var that = this;
+      if(!(node==null)){
+        that.divList.push(node);
+        that.preSort(node.firstElementChild);
+        that.preSort(node.lastElementChild);
+      }
+    },
+    midSort:function(node){
+      if(!(node==null)){
+        this.midSort(node.firstElementChild);
+        this.divList.push(node);
+        this.midSort(node.lastElementChild);
+      }
+    },
+    aftSort:function(node){
+      if(!(node==null)){
+        this.aftSort(node.firstElementChild);
+        this.aftSort(node.lastElementChild);
+        this.divList.push(node);
+      }
+    },
+    reset:function(){
+      this.divList = [];
+      var container = document.getElementById('container');
+      container.style.backgroundColor = 'white';
+      var div = container.querySelectorAll('div');
+      for(var i=0;i<div.length;i++){
+        div[i].style.backgroundColor = 'white';
+      }
+    },
+    changeColor:function(){
+      var i = 0;
+      var that = this;
+      this.divList[i].style.backgroundColor = 'blue';
+      var timer = setInterval(function(arg){
+        i++;
+        if(i < that.divList.length){
+          console.log(i);
+          console.log(that.divList[i]);
+          that.divList[i-1].style.backgroundColor = '#ffffff';
+          that.divList[i].style.backgroundColor = 'blue';
+        }else{
+          clearInterval(timer);
+          that.divList[that.divList.length-1].style.backgroundColor = 'white';
+        }
+      },500)
+    }
+
+  }
 
 </script>
 </body>
