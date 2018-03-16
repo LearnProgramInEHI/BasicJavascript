@@ -141,12 +141,12 @@
           console.log("the current i is :"+i);
           console.log('the node list length is :'+that.nodeList.length)
           if(that.nodeList[i].innerText.localeCompare(text) == 0){
-            clearInterval(timer); 
+            clearInterval(thattimer); 
           }
           that.nodeList[i-1].style.backgroundColor = 'white';
           that.nodeList[i].style.backgroundColor = 'blue';
         }else{
-          clearInterval(this.timer);
+          clearInterval(that.timer);
           that.nodeList[that.nodeList.length-1].style.backgroundColor = 'white';
         }
       },500)
