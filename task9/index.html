@@ -2,13 +2,197 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>IFE JavaScript Task 01</title>
+    <title>IFE JavaScript Task 08</title>
+    <style>
+     #container{
+        width:1340px;
+        height:300px;
+        margin: 0 auto;
+     }
+     div{
+        margin:10px;
+        width:80%;
+        padding:5px;
+        height:50%;
+        border: 1px solid black;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: center;
+      }
+      #btn{
+        margin:0 auto;
+        width:600px;
+        text-align: center;
+        border: none;
+      }
+    </style>
   </head>
 <body>
+<div id='container' class='child'>Super
+    <div class='child'>first
+        <div class='child'>apple
+          <div class='child'>pear</div>
+          <div class='child'>pig</div>
+          <div class='child'>cola</div>
+          <div class='child'>soccer</div>          
+        </div>
 
- 
+        <div class='child'>phone</div>
+        <div class='child'>
+          <div class='child'>book</div>
+          <div class='child'>school</div>          
+        </div>
+        
+    </div>
+
+    <div class='child'>note
+        <div class='child'>human
+            <div class='child'>code</div>
+            <div class='child'>operate</div>
+            <div class='child'>man</div>            
+        </div>
+        <div class='child'>program
+          <div class='child'>bement
+            <div class='child'>cat</div>            
+          </div>          
+        </div>
+        <div class='child'>glass</div>      
+    </div>
+
+    <div class='child'>
+      fish
+    </div>
+</div>
+<div id='btn'>
+  <input type='text' id='search'>
+  <button id='searchWideBtn'>广度搜索</button>
+  <button id='searchDeepBtn'>深度搜索</button>  
+  <button id='wideBtn'>广度遍历</button>
+  <button id='deepBtn'>深度遍历</button>
+  <button id='addBtn'>增加</button>
+  <button id='delBtn'>删除</button>
+</div>
 <script type="text/javascript">
+  window.onload = function(){
+    var root = document.querySelector('.child')
+    var WideBtn = document.getElementById('wideBtn');
+    var deepBtn = document.getElementById('deepBtn');
+    var searchWideBtn = document.getElementById('searchWideBtn');
+    var searchDeepBtn = document.getElementById('searchDeepBtn');
+    var addBtn = document.getElementById('addBtn');
+    var delBtn = document.getElementById('delBtn');
 
+   
+    
+    var b = new Box();
+    searchWideBtn.onclick = function(){
+      var value = document.getElementById('search').value;
+      b.reset();
+      b.wideSearch(root);
+      b.changeColor(value);
+    };
+    wideBtn.onclick = function(){
+      b.reset();
+      b.wideSearch(root);
+      b.changeColor();
+    };
+    deepBtn.onclick = function(){
+      b.reset();
+      b.deepSearch(root);
+      b.changeColor();
+    }
+    searchDeepBtn.onclick = function(){
+      var value = document.getElementById('search').value;
+      b.reset();
+      b.deepSearch(root);
+      b.changeColor(value);
+    }
+     root.addEventListener('click',function(e){
+       b.reset();
+       e.target.style.backgroundColor = 'blue';
+      addBtn.addEventListener('click',function(){
+        var elem = document.getElementById('search').value;
+        if(e.target.style.backgroundColor == 'blue'){
+          b.reset();
+          b.addElement(e.target,elem);
+        }
+      });
+      delBtn.addEventListener('click',function(){
+        if(e.target.style.backgroundColor == 'blue'){
+          b.reset();
+          b.delElement(e.target);
+        }
+      })
+    })
+  }
+  function Box(){
+    this.nodeList = [];
+    this.index = 0;
+    this.timer = null;
+  }
+  Box.prototype = {
+    contructor:Box,
+    deepSearch:function(node){
+      var that = this;
+      if(node!=null){
+          that.nodeList.push(node);
+          for(var i=0;i<node.children.length;i++){
+            that.deepSearch(node.children[i]);
+          }
+      }
+    },
+    wideSearch:function(node){
+      var that = this;
+      if(node!=null){
+         if(node.className=='child'){
+            that.nodeList.push(node);
+            that.wideSearch(node.nextElementSibling);
+            node = that.nodeList[that.index++];
+            that.wideSearch(node.firstElementChild)
+         }
+      }
+    },
+    changeColor:function(text){
+      var that = this;
+      var i = 0
+      that.nodeList[i].style.backgroundColor = 'blue';
+      that.timer = setInterval(function(){
+        i++;
+        if(i<that.nodeList.length){
+          console.log("the current i is :"+i);
+          console.log('the node list length is :'+that.nodeList.length)
+          if(that.nodeList[i].innerText.localeCompare(text) == 0){
+            clearInterval(thattimer); 
+          }
+          that.nodeList[i-1].style.backgroundColor = 'white';
+          that.nodeList[i].style.backgroundColor = 'blue';
+        }else{
+          clearInterval(that.timer);
+          that.nodeList[that.nodeList.length-1].style.backgroundColor = 'white';
+        }
+      },500)
+    },
+    reset:function(){
+      this.index = 0;
+      clearInterval(this.timer);
+      this.nodeList = [];    
+      var child = document.querySelectorAll('.child');
+      for(var i=0;i<child.length;i++){
+        child[i].style.backgroundColor = 'white';
+      }
+    },
+    addElement:function(parentNode,value){
+      var div = document.createElement('div');
+      div.className = 'child';
+      div.innerText = value;
+      parentNode.appendChild(div);
+    },
+    delElement:function(elem){
+      elem.remove();
+    },
+  }
 </script>
 </body>
 </html>
