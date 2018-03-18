@@ -3,12 +3,102 @@
   <head>
     <meta charset="utf-8">
     <title>IFE JavaScript Task 01</title>
+    <style>
+      *{
+        margin:0;
+        padding:0;
+      }
+      main{
+        margin:0 auto;
+        width:800px;     
+        text-align: center;  
+        margin-top:150px; 
+      }
+      .verify{
+        margin-top:2rem;
+      }
+      label{
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-size: 1rem;
+        width:20%;
+        display: inline-block;
+        text-align: right;
+        padding:0.5rem;
+
+      }
+      p{
+        margin-left:32.3%;
+        text-align: left;
+        padding:0.3rem;
+      }
+      .name{
+        width:50%;
+        height:1rem;
+        padding: 0.3rem;
+      }
+      button{
+        padding:0.5rem;
+      }
+      .tip{
+        display: none;
+      }
+
+    </style>
   </head>
 <body>
+<main>
+  <form action>
+    <div class='verify'>
+      <label>名称: </label>
+      <input class='name' id='name1' type='text'>
+      <button  class='verify1'>验证</button>      
+      <p class='tip tip1'>必填！字符数为4~16位</p>
+    </div>
+    <div class='verify'>
+      <label>名称: </label>
+      <input class='name' id='name2' type='text'>
+      <button class='verify2'>验证</button>
+      <p class='tip tip2'>必填!字母，数字，英文符号长度为 1 </p>
+    </div>
+    <div class='verify'>
+      <label>名称: </label>
+      <input class='name' id='name3' type='text'>
+      <button class='verify3'>验证</button>
+      <p class='tip tip3'>必填！每个中文字符为2</p>
+    </div>
+  </form>
+</main>
 
  
 <script type="text/javascript">
+window.onload = function(){
 
+}
+
+function Verify(){
+
+}
+Verify.prototype = {
+  constructor:Verify,
+  reset:function(){
+    var tip = document.querySelectorAll('.tip');
+    for(var i=0;i<tip.length;i++){
+        tip[i].style.display = 'none';
+    }
+  },
+  verify1: function(text){
+    this.reset();
+
+
+  },
+  verify2:function(text){
+    this.reset();
+
+  },
+  verify3:function(text){
+    this.reset();
+  }
+}
 </script>
 </body>
 </html>
