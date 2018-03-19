@@ -39,32 +39,26 @@
       button{
         padding:0.5rem;
       }
-      .tip{
-        display: none;
-      }
 
     </style>
   </head>
 <body>
 <main>
-  <form action>
+  <form action method="">
     <div class='verify'>
       <label>名称: </label>
       <input class='name' id='name1' type='text'>
       <button  class='verify1'>验证</button>      
-      <p class='tip tip1'>必填！字符数为4~16位</p>
     </div>
     <div class='verify'>
       <label>名称: </label>
       <input class='name' id='name2' type='text'>
       <button class='verify2'>验证</button>
-      <p class='tip tip2'>必填!字母，数字，英文符号长度为 1 </p>
     </div>
     <div class='verify'>
       <label>名称: </label>
       <input class='name' id='name3' type='text'>
       <button class='verify3'>验证</button>
-      <p class='tip tip3'>必填！每个中文字符为2</p>
     </div>
   </form>
 </main>
@@ -72,31 +66,49 @@
  
 <script type="text/javascript">
 window.onload = function(){
-
+  var tip = document.querySelectorAll('.verify');
+  var verify = new Verify();
+  var verifyBtn1 = document.querySelector('.verify1');
+  var verifyBtn2 = document.querySelector('.verify2');
+  var verifyBtn3 = document.querySelector('.verify3');
+ 
+  verifyBtn1.onclick = function(){
+    var v = document.querySelector('#name1').value;
+    var r = /^\w+$/g
+    verify.verify1(v,tip[0],r,'必填，1~16个字符','验证成功','grey','green');
+    return false;
+  }
+  verifyBtn2.onclick = function(){
+    var v = document.querySelector('#name2').value;
+    var r = /^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[_\-@&=])[a-z0-9_\-@&=]+$/g
+    verify.verify1(v,tip[1],r,'必填，至少一个字母数字字符','验证成功','red','green');
+    return false;
+  }
+  verifyBtn3.onclick = function(){
+    var v = document.querySelector('#name3').value;
+    var r = /^[\u4e00-\u9fa5]{2}$/g
+    verify.verify1(v,tip[2],r,'必填，至少两个中文字符','验证成功','red','green');
+    return false;    
+  }
 }
 
 function Verify(){
-
 }
 Verify.prototype = {
   constructor:Verify,
-  reset:function(){
-    var tip = document.querySelectorAll('.tip');
-    for(var i=0;i<tip.length;i++){
-        tip[i].style.display = 'none';
-    }
-  },
-  verify1: function(text){
-    this.reset();
-
-
-  },
-  verify2:function(text){
-    this.reset();
-
-  },
-  verify3:function(text){
-    this.reset();
+  p:document.createElement('p'),
+  verify1: function(text,container,regexp,failed_tips,success_tips,failed_color,success_color){
+   
+    this.p.className = 'tip';
+    if((text.match(regexp)==null)){
+      console.log(text.match(regexp))
+      this.p.style.color = failed_color;
+      this.p.innerText = failed_tips
+    }else{
+      this.p.innerText = success_tips;
+      this.p.style.color = success_color;
+    } 
+    container.appendChild(this.p);
   }
 }
 </script>
