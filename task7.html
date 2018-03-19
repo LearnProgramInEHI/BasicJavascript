@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='UTF-8'>
+        <title>task7 </title>
+    </head>
+    <style type='text/css'>
+        .box{
+            display:flex;
+            justify-content: center;
+        }
+        .root{
+            display: flex;
+            border:4px solid black;
+            width: 900px;
+            height:400px;
+            justify-content: center;
+            align-items: center;
+        }
+        .child-1{
+            display: flex;
+            border: 3px solid black;
+            width:420px;
+            height:320px;
+            justify-content: center;
+            align-items: center;
+            margin: 10px;            
+        }
+        .child-2{
+            display: flex;
+            border: 2px solid black;
+            width: 180px;
+            height: 240px;
+            justify-content: center;
+            align-items: center;
+            margin: 10px;            
+        }
+        .child-3{
+            display: flex;
+            border:1px solid black;
+            width: 60px;
+            height: 80px;
+            justify-content: center;
+            align-items: center;
+            margin: 10px;
+        }
+        .btns{
+            display: flex;
+            justify-content: center;
+        }
+        .btns button{margin: 8px;}
+    </style>
+    <body>
+        <div class='box'>
+            <div class="root">
+                <div class="child-1">
+                    <div class="child-2">
+                        <div class="child-3"></div>
+                        <div class="child-3"></div>                        
+                    </div>
+                    <div class="child-2">
+                        <div class="child-3"></div>                        
+                        <div class="child-3"></div>
+                    </div>                                            
+                </div>
+                <div class="child-1">
+                    <div class="child-2">
+                        <div class="child-3"></div>
+                        <div class="child-3"></div>                        
+                    </div>
+                    <div class="child-2">
+                        <div class="child-3"></div>                        
+                        <div class="child-3"></div>
+                    </div>                                            
+                </div>
+            </div>
+        </div>
+        <div class='btns'>
+            <button id='preOrder'>前序</button>
+            <button id='inOrder'>中序</button>
+            <button id='postOrder'>后序</button>            
+        </div>
+    </body>
+    <script type="text/javascript">
+        var preO=document.getElementById('preOrder');
+        var inO=document.getElementById('inOrder');
+        var postO=document.getElementById('postOrder');
+        var root=document.getElementsByClassName('root')[0];
+        var data=[];
+        var timer,firstC;
+        //前序
+        function preOrder(node){
+            if(node!=null){
+                data.push(node);
+                preOrder(node.firstElementChild);
+                preOrder(node.lastElementChild);
+            }
+        }
+        //中序
+        function inOrder(node){
+            if(node!=null){
+                inOrder(node.firstElementChild);
+                data.push(node);
+                inOrder(node.lastElementChild);
+            }
+        }
+        //后序
+        function postOrder(node){
+            if(node!=null){
+                postOrder(node.firstElementChild);
+                postOrder(node.lastElementChild);
+                data.push(node);
+            }
+        }
+        //显示
+        function show(){
+            firstC=data.shift();
+            if(firstC)
+            {
+                firstC.style.backgroundColor="#ff0000";
+                timer=setTimeout(function(){
+                    firstC.style.backgroundColor="#ffffff";
+                    show();
+                },500)
+            }
+        }
+        preO.addEventListener('click',function(){
+            preOrder(root);
+            show();
+        });
+        inO.addEventListener('click',function(){
+            inOrder(root);
+            show();
+        })
+        postO.addEventListener('click',function(){
+            postOrder(root);
+            show();
+        })
+    </script>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='UTF-8'>
+        <title>task8</title>
+        <style type='text/css'>
+            .box{
+                display: flex;
+                justify-content: center;
+            }
+            .root{
+                display: flex;
+                border:1px solid black;
+                justify-content: center;
+                align-items: center;
+                height:400px;
+            }
+            .child-1{
+                display: flex;
+                border:1px solid black;                
+                justify-content: center;
+                align-items: center;
+                height:320px;
+                margin:5px;
+            }
+            .child-2{
+                display: flex;
+                border:1px solid black;                
+                justify-content: center;
+                align-items: center;
+                height:120px;
+                margin:5px;
+            }
+            .child-3{
+                display: flex;
+                border:1px solid black;                
+                justify-content: center;
+                align-items: center;
+                height:70px;
+                margin:5px;
+            }
+            .child-4{
+                display: flex;
+                border:1px solid black;                
+                justify-content: center;
+                align-items: center;
+                height:50px;
+                margin:5px;
+            }
+            .btns{
+                display: flex;
+                justify-content: center;
+                margin: 10px;
+            }
+            .btns button{margin: 10px;}
+        </style>
+    </head>
+    <body>
+        <div class="box">
+            <div class="root">super
+                <div class="child-1">car
+                    <div class="child-2">apple
+                        <div class="child-3">poor</div>
+                        <div class="child-3">pig</div>
+                        <div class="child-3">cola</div>
+                        <div class="child-3">socceer</div>                        
+                    </div>
+                    <div class="child-2">phone</div>
+                    <div class="child-2">
+                        <div class="child-3">book</div>
+                        <div class="child-3">school</div>                        
+                    </div>                  
+                </div>
+                <div class="child-1">note
+                    <div class="child-2">human
+                        <div class="child-3">code</div>
+                        <div class="child-3">operate</div>
+                        <div class="child-3">mon</div>
+                    </div>   
+                    <div class="child-2">progrom
+                        <div class="child-3">bement
+                            <div class="child-4">cat</div>
+                        </div>
+                        <div class="child-3">glass</div>
+                    </div>                 
+                </div>
+                <div class="child-1">fish</div>
+            </div>
+        </div>
+        <div class="btns">
+            <button id="traversal">深度优先遍历</button>
+            <input type="text" id="input">
+            <button id="serach">查询</button> 
+        </div>
+               
+    </body>
+    <script>
+        var tra=document.getElementById('traversal');
+        var ser=document.getElementById('serach');
+        var root=document.getElementsByClassName('root')[0];
+        var input=document.getElementById('input').value;
+        var data=[];
+        var timer;
+        function travel(node)
+        {
+            if(node!=null)
+            {
+                data.push(node);
+                for(var i=0;i<node.children.length;i++)
+                {
+                    if(node.children[i].nodeType==1)
+                    {
+                        travel(node.children[i]);
+                    }
+                }   
+            }
+        }        
+        function show(a)
+        {
+            var input=document.getElementById('input').value;
+            i = 0;
+            data[i].style.backgroundColor='#ff0000';
+            timer = setInterval(function () 
+            {
+                i++;
+                if (i < data.length) 
+                {
+                    var content=data[i].firstChild.nodeValue.replace(/(^\s*)|(\s*$)/g, "");
+                    if(input==content&&content&&a==1)
+                    {
+                        clearInterval(timer);
+                        data[i].style.backgroundColor="#ffff00";
+                        data[i-1].style.backgroundColor="#fff";
+                    }
+                    else
+                    {
+                        data[i-1].style.backgroundColor = '#fff';
+                        data[i].style.backgroundColor = '#ff0000';
+                    }
+                } 
+                else 
+                {
+                    clearInterval(timer);
+                    data[data.length-1].style.backgroundColor = '#fff';
+                    if(a==1) alert("查询无结果");
+                }
+            },500);
+        }
+        tra.addEventListener('click',function(){
+            travel(root);
+            show(0);
+        });
+        ser.addEventListener('click',function(){
+            travel(root);
+            show(1);
+        })
+        
+    </script>
+</html>
