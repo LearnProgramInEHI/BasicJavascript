@@ -98,7 +98,6 @@ Verify.prototype = {
   constructor:Verify,
   p:document.createElement('p'),
   verify1: function(text,container,regexp,failed_tips,success_tips,failed_color,success_color){
-   
     this.p.className = 'tip';
     if((text.match(regexp)==null)){
       console.log(text.match(regexp))
