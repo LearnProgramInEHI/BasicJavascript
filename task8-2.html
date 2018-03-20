@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='UTF-8'>
+        <title>task8</title>
+    </head>
+    <style type='text/css'>
+            .box{
+                display: flex;
+                justify-content: center;
+            }
+            .root{
+                display: flex;
+                border:1px solid black;
+                justify-content: center;
+                align-items: center;
+                height:400px;
+            }
+            .child-1{
+                display: flex;
+                border:1px solid black;                
+                justify-content: center;
+                align-items: center;
+                height:320px;
+                margin:5px;
+            }
+            .child-2{
+                display: flex;
+                border:1px solid black;                
+                justify-content: center;
+                align-items: center;
+                height:120px;
+                margin:5px;
+            }
+            .child-3{
+                display: flex;
+                border:1px solid black;                
+                justify-content: center;
+                align-items: center;
+                height:70px;
+                margin:5px;
+            }
+            .child-4{
+                display: flex;
+                border:1px solid black;                
+                justify-content: center;
+                align-items: center;
+                height:50px;
+                margin:5px;
+            }
+            .btns{
+                display: flex;
+                justify-content: center;
+                margin: 10px;
+            }
+            .btns button{margin: 10px;}
+            .search-div{
+			display: flex;
+			justify-content: center;
+			margin: 10px;
+		    }
+        </style>
+    <body>
+        <div class="box">
+            <div class="root" id='super'>super
+                <div class="child-1" id='car'>car
+                    <div class="child-2" id='apple'>apple
+                        <div class="child-3" id='poor'>poor</div>
+                        <div class="child-3" id='pig'>pig</div>
+                        <div class="child-3" id='cola'>cola</div>
+                        <div class="child-3" id='socceer'>socceer</div>                        
+                    </div>
+                    <div class="child-2" id='phone'>phone</div>
+                    <div class="child-2">
+                        <div class="child-3" id='book'>book</div>
+                        <div class="child-3" id='school'>school</div>                        
+                    </div>                  
+                </div>
+                <div class="child-1" id='note'>note
+                    <div class="child-2" id='human'>human
+                        <div class="child-3" id='code'>code</div>
+                        <div class="child-3" id='operrate'>operate</div>
+                        <div class="child-3" id='mon'>mon</div>
+                    </div>   
+                    <div class="child-2" id='program'>progrom
+                        <div class="child-3" id='bement'>bement
+                            <div class="child-4" id='cat'>cat</div>
+                        </div>
+                        <div class="child-3" id='glass'>glass</div>
+                    </div>                 
+                </div>
+                <div class="child-1" id='fish'>fish</div>
+            </div>
+        </div>
+        <div class="btns">
+            <button id="traversal">遍历</button>
+        </div>
+        <div class="search-div">
+			<input id="input">
+			<button id="search">查询</button>
+		</div>             
+    </body>
+    <script>
+        var tra=document.getElementById('traversal');
+        var ser=document.getElementById('search');
+        var root=document.getElementsByClassName('root')[0];
+        var input=document.getElementById('input');
+        var data=[];
+        var timer,firstC;
+        function travel(node)
+        {
+            if(node!=null)
+            {
+                data.push(node);
+                for(var i=0;i<node.children.length;i++)
+                {
+                    if(node.children[i].nodeType==1)
+                    {
+                        travel(node.children[i]);
+                    }
+                }   
+            }
+        }        
+        //显示
+		function show(){
+			firstC = data.shift();
+			if(firstC){
+				firstC.style.backgroundColor = "#ff0000";
+				timer = setTimeout(function(){
+					firstC.style.backgroundColor = "#fff";
+					show();
+				},500);
+			}
+		}
+		//查询
+		function showSearch(){
+			firstC = data.shift();
+			if(firstC){
+				firstC.style.backgroundColor = "#ff0000";
+				timer = setTimeout(function(){
+					firstC.style.backgroundColor = "#fff";
+					if(firstC.id === input.value){
+						firstC.style.backgroundColor="#ffff00";						
+					}
+					showSearch();
+				},500);
+			}
+		}
+        tra.addEventListener('click',function(){
+            travel(root);
+            show();
+        });
+        ser.addEventListener('click',function(){
+            travel(root);
+            showSearch();
+        });
+    </script>
+</html>
